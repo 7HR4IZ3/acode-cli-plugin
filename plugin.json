@@ -1,0 +1,16 @@
+{
+  "id": "acode.cli.plugin", 
+  "name": "Acode CLI Plugin",
+  "main": "main.js",
+  "version": "0.0.1",
+  "readme": "readme.md",
+  "icon": "icon.png",
+  "files": [],
+  "minVersionCode" : 290,
+  "price": 0,
+  "author": {
+    "name": "Thraize",
+    "email": "gamerxville@gmail.com",
+    "github": "7HR4IZ3"
+  }
+}
