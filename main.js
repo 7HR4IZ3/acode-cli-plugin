@@ -37,7 +37,7 @@
         if (source.uri.startsWith(sdcardPrefix)) {
           let raw = decodeURIComponent(source.uri.substr(sdcardPrefix.length));
           if (relPath.startsWith(raw)) {
-            return source.uri + "::primary:" + relPath
+            return source.uri + "::primary:" + relPath;
           }
         }
       }
@@ -55,6 +55,8 @@
       return fileUrl;
     }
   }
+  
+  console.log("Hello World")
 
   acode.setPluginInit(plugin.id, () => {
     let intent = acode.require("intent");
@@ -66,8 +68,6 @@
           path = unFormatUrl(decodeURIComponent(value));
         }
         let basename = url.basename(path);
-        
-        console.log(path, action)
 
         switch (action) {
           case "open-file":
@@ -81,9 +81,20 @@
             openFolder(path, { name: basename });
             break;
           case "install":
+          case "enable":
+          case "disable":
+          case "uninstall":
             let acodeSdk = acode.require("acode.sdk");
             if (acodeSdk) {
-              acodeSdk.installPlugin({ url: path });
+              if (action === "install") {
+                acodeSdk.installPlugin({ url: path, type: "file" });
+              } else if (action === "uninstall") {
+                acodeSdk.uninstall(value, { plugin: { name: value } });
+              } else if (action === "enable") {
+                acodeSdk.enable(value, { plugin: { name: value } });
+              } else if (action === "disable") {
+                acodeSdk.disable(value, { plugin: { name: value } });
+              }
             } else {
               acode.alert(
                 "Acode CLI",
